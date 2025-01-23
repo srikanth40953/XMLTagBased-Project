@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- Hibernate SessionFactory Bean-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties" ref="hibernateProperties"/>
+        <property name="packagesToScan" value="com.example.hibernatetwo.model" />
+    </bean>
+
+    <!-- DataSource Bean -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/srikanthdb" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+    </bean>
+
+	<!-- Hibernate Properties Configuration -->
+	<bean id="hibernateProperties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="properties">
+			<props>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop> <!-- Add other Hibernate properties here -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+
+    <!-- Hibernate Transaction Manager bean -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <!-- Enable Transaction Management -->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    
+    <!-- 1 Define your StudentDAO bean -->
+    <bean id="StudentDao" class="com.example.hibernatetwo.daoImpl.StudentDaoImpl">
+    </bean>
+
+		<bean id="StudentService" class="com.example.hibernatetwo.serviceImpl.StudentServiceImpl">
+		<property name="StudentDao" ref="StudentDao"></property>
+		<!-- <property name="sessionFactory" ref="sessionFactory"></property> -->
+		</bean>
+
+</beans>
