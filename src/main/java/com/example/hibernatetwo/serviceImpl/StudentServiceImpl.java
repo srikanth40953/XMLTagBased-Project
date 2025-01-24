@@ -59,9 +59,6 @@ public class StudentServiceImpl implements StudentService{
 	@Override 
 	public String testStudentService() {
 		System.out.println("inside testStudentService!");
-		//By using below way we call our applicationContext.xml file manually whenever required
-		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		SessionFactory sesnFactory = context.getBean(SessionFactory.class);
 		String str = studentDao.testStudentDao();
 		return str;
 	}

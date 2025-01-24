@@ -47,39 +47,7 @@ public class StudentDaoImpl implements StudentDao{
 		System.out.println("inside testStudentDaoImpl");
 		String success="StudentDaoImpl success! ";
 		return success;
-	}
-/*
-	@Override
-	public String saveStudentDetailsDao(Student student) {
-		System.out.println("Inside saveStudentDetailsDaoImpl");
-		try {
-			
-		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		SessionFactory sessionFactory = context.getBean(SessionFactory.class);
-		System.out.println("loading sessionFactory Bean is completed!");
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		String sql="Insert into student_details (studentName, attendancePercentage) values (:studentName, :attendancePercentage)";							
-		NativeQuery<?> query = session.createNativeQuery(sql);
-		query.setParameter("studentName", student.getStudentName());
-		query.setParameter("attendancePercentage", student.getAttendancePercentage());
-		int rowsUpdated = query.executeUpdate();
-		
-		session.getTransaction().commit();
-		session.close();
-		if(rowsUpdated>0) {
-			return "Student inserted successfully!";
-		} else {
-			return "Student insertion Failed!";
-		}
-		} catch(Exception e) {
-			System.out.println("message="+e.getMessage());
-			return "Student insertion Failed!";
-		}
-	}
-*/
-	
-	
+	}	
 	
 	@Override
 	public String saveStudentDetailsDao(Student student) {
@@ -91,10 +59,11 @@ public class StudentDaoImpl implements StudentDao{
 		Session session=factory.openSession();
 		
 		session.beginTransaction();
-		String sql="Insert into student_details (studentName, attendancePercentage) values (:studentName, :attendancePercentage)";							
+		String sql="Insert into student_details (studentName, attendancePercentage, departmentId) values (:studentName, :attendancePercentage, :departmentId)";							
 		NativeQuery<?> query = session.createNativeQuery(sql);
 		query.setParameter("studentName", student.getStudentName());
 		query.setParameter("attendancePercentage", student.getAttendancePercentage());
+		query.setParameter("departmentId", student.getDepartmentId());
 		int rowsUpdated = query.executeUpdate();
 		
 		session.getTransaction().commit();
