@@ -2,6 +2,7 @@ package com.example.hibernatetwo.serviceImpl;
 
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -80,7 +81,7 @@ public class StudentServiceImpl implements StudentService{
 	}
 
 	@Override
-	public String updateStudentAttendance(float attendance,String name) {
+	public String updateStudentAttendance(BigDecimal attendance,String name) {
 		String str = studentDao.updateStudentAttendance(attendance, name);
 		return str;
 	}
@@ -91,6 +92,10 @@ public class StudentServiceImpl implements StudentService{
 		return studentDao.getStudentsList();
 	}
 	
-
+	@Override
+	public String saveAllStudents(List<Student> students) {
+		String str = studentDao.saveAllStudents(students);
+		return str;
+	}
 	
 }

@@ -53,4 +53,16 @@
 		<!-- <property name="sessionFactory" ref="sessionFactory"></property> -->
 		</bean>
 
+<!-- Defining bean for StudentDepartmentDao -->
+<bean id="StudentDepartmentDao" class="com.example.hibernatetwo.daoImpl.StudentDepartmentDaoImpl">
+</bean>
+
+<!-- 1.Defining bean for StudentDepartmentService -->
+<!-- 2.I want to use daoImpl bean in serviceImpl.so adding property of daoImpl bean in serviceImpl bean -->
+<bean id="StudentDepartmentService" class="com.example.hibernatetwo.serviceImpl.StudentDepartmentServiceImpl">
+<property name="StudentDepartmentDao" ref="StudentDepartmentDao"></property>
+</bean>
+
+
+
 </beans>
