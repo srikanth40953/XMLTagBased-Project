@@ -6,6 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Table(name="department_details")
 @Entity
@@ -14,8 +17,21 @@ public class StudentDepartment {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int departmentId;
+	
+	@NotNull
+	@Size(min=2, max=60)
 	private String departmentName;
 	
+	@NotNull
+	@Size(min=2, max=10)
+	private String departmentCode;
+	
+	public String getDepartmentCode() {
+		return departmentCode;
+	}
+	public void setDepartmentCode(String departmentCode) {
+		this.departmentCode = departmentCode;
+	}
 	public int getDepartmentId() {
 		return departmentId;
 	}
@@ -31,15 +47,11 @@ public class StudentDepartment {
 	public StudentDepartment() {
 		super();
 	}
-	public StudentDepartment(int departmentId, String departmentName) {
+	public StudentDepartment(String departmentName, String departmentCode) {
 		super();
-		this.departmentId = departmentId;
 		this.departmentName = departmentName;
+		this.departmentCode = departmentCode;
 	}
 	
-	@Override
-	public String toString() {
-		return "StudentDepartment [departmentId=" + departmentId + ", departmentName=" + departmentName + "]";
-	}
 	
 }

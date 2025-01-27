@@ -1,8 +1,10 @@
 package com.example.hibernatetwo.daoImpl;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,9 +56,7 @@ public class StudentDaoImpl implements StudentDao{
 		System.out.println("Inside saveStudentDetailsDaoImpl");
 		try {
 		
-		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");	
-		SessionFactory factory = (SessionFactory) context.getBean("sessionFactory");
-		Session session=factory.openSession();
+		Session session = cFunctions.createSession();
 		
 		session.beginTransaction();
 		String sql="Insert into student_details (studentName, attendancePercentage, departmentId) values (:studentName, :attendancePercentage, :departmentId)";							
@@ -83,7 +83,7 @@ public class StudentDaoImpl implements StudentDao{
 	private commonFunctions cFunctions;
 
 	@Override
-	public String updateStudentAttendance(float attendance, String name) {
+	public String updateStudentAttendance(BigDecimal attendance, String name) {
 		try {
 		Session session = cFunctions.createSession();
 		session.beginTransaction();
@@ -120,6 +120,31 @@ public class StudentDaoImpl implements StudentDao{
 		session.getTransaction().commit();
 		session.close();
 		return studentList;
+	}
+
+	@Override
+	public String saveAllStudents(List<Student> students) {
+		Session session = cFunctions.createSession();
+		Transaction transaction = session.beginTransaction();
+		try {
+		for(Student stu : students) {
+			session.persist(stu);
+		}
+		transaction.commit();
+		return students.size()+" students inserted successfully!";
+		} catch (Exception e) {
+			if(transaction !=null)
+				transaction.rollback();
+			e.printStackTrace();
+			return "students insertion failed!";
+		}
+	}
+
+	@Override
+	public List<Object[]> getAllStudentsAccToDepartment() {
+		Session session = cFunctions.createSession();
+		Transaction transaction = session.beginTransaction(); 
+		return null;
 	}
 
 	
