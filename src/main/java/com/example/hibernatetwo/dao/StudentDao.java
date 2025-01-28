@@ -6,6 +6,7 @@ import com.example.hibernatetwo.model.Student;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface StudentDao {
@@ -16,6 +17,6 @@ public interface StudentDao {
 	String updateStudentAttendance(BigDecimal attendance, String name);
 	List<Student> getStudentsList();
 	String saveAllStudents(List<Student> students);
-	List<Object[]> getAllStudentsAccToDepartment();
+	List<Map<String,String>> getAllStudentsAccToDepartment();
 	
 }

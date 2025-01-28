@@ -57,4 +57,15 @@ public class GlobalExceptionHandler {
 
     }
 	
+	//Handling CustomException
+	@ExceptionHandler(CustomException.class)
+	public ResponseEntity<Map> customExceptnHandling(CustomException ce) {
+		
+		Map<String,String> map = new HashMap<>();
+		map.put("Exception Name : ", ce+" Exception");
+		map.put("message : ", "Exception occurred and Handled successfully!");
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(map);
+	}
+	
+	
 }

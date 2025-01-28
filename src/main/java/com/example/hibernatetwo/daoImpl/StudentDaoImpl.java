@@ -6,7 +6,9 @@ import org.hibernate.query.NativeQuery;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,10 +143,37 @@ public class StudentDaoImpl implements StudentDao{
 	}
 
 	@Override
-	public List<Object[]> getAllStudentsAccToDepartment() {
+	public List<Map<String,String>> getAllStudentsAccToDepartment() {
 		Session session = cFunctions.createSession();
 		Transaction transaction = session.beginTransaction(); 
-		return null;
+		try {
+			String sql = "select rollNum,studentName,departmentCode,departmentName,attendancePercentage,"
+						+ "dpd_d.departmentId from student_details as std_d left join department_details as dpd_d on "
+						+ "std_d.departmentId = dpd_d.departmentId";
+			NativeQuery query=session.createNativeQuery(sql);
+			List<Object[]> result = query.getResultList(); // here we will get data in this form- i.e; only values
+		/*	(eg. [[1,"Srikanth1","ECE","Electronics and communication Engineering",90.00,1],[2,"Srikanth2","IT","Information Technology Engineering",80.00,2]];	*/
+			
+			List<Map<String,String>> listOfMap = new ArrayList<>();
+			
+			for(Object[] s:result) {
+				Map<String, String> map = new HashMap<>();
+				map.put("rollNum", String.valueOf(s[0]));
+				map.put("studentName", String.valueOf(s[1]));
+				map.put("departmentCode", String.valueOf(s[2]));
+				map.put("departmentName", String.valueOf(s[3]));
+				map.put("attendancePercentage", String.valueOf(s[4]));
+				listOfMap.add(map);
+				
+			}
+			
+			transaction.commit();
+			session.close();
+			return listOfMap;
+		} catch(Exception e) {
+			transaction.rollback();
+			return null;
+		}
 	}
 
 	

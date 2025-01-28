@@ -4,6 +4,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -96,6 +97,11 @@ public class StudentServiceImpl implements StudentService{
 	public String saveAllStudents(List<Student> students) {
 		String str = studentDao.saveAllStudents(students);
 		return str;
+	}
+
+	@Override
+	public List<Map<String,String>> getAllStudentsAccToDepartment() {
+		return studentDao.getAllStudentsAccToDepartment();
 	}
 	
 }

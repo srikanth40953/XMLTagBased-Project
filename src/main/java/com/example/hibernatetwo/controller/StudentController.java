@@ -1,7 +1,9 @@
 package com.example.hibernatetwo.controller;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //import javax.validation.Valid;
 //import org.springframework.validation.annotation.Validated;
@@ -72,6 +74,20 @@ public class StudentController {
 	public String saveMultipleStudents(@RequestBody List<Student> students) {
 		String str = studentService.saveAllStudents(students);
 		return str;
+	}
+	
+	@ResponseBody
+	@GetMapping("/getAllStudentsAccToDepartment")
+	public List<Map<String,String>> getAllStudentsAccToDepartment(){
+		List<Map<String,String>> list = studentService.getAllStudentsAccToDepartment();
+		if(list != null) {
+		return studentService.getAllStudentsAccToDepartment();
+		} else {
+			Map<String,String> map = new HashMap<>();
+			map.put("Result", "No data Found!!! Please check student_details and department_details tables individualy! ");
+			list.add(map);
+			return list;
+		}
 	}
 	
 }
