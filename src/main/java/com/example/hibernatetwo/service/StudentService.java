@@ -2,6 +2,7 @@ package com.example.hibernatetwo.service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,5 +21,5 @@ public interface StudentService {
 	String updateStudentAttendance(BigDecimal attendance, String name);
 	List<Student> getStudentsList();
 	String saveAllStudents(List<Student> students);
-
+	List<Map<String,String>> getAllStudentsAccToDepartment();
 }

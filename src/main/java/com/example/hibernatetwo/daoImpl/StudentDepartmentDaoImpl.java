@@ -42,30 +42,47 @@ public class StudentDepartmentDaoImpl implements StudentDepartmentDao {
 	}
 
 	@Override
-	public String updateDepartmentName(int studDepartmentId, String studDepartmentName) {
-		Session session = commonFunctions.createSession();
-		Transaction transaction= session.beginTransaction();
-		try{
-			
-		} catch (Exception e) {
-			
-		}
-		
-		
-		
-		return null;
-	}
-
-	@Override
 	public List<StudentDepartment> getDepartmentList() {
 		
-		return null;
+		Session session = commonFunctions.createSession();
+		Transaction transaction = session.beginTransaction();
+		try {
+			String sql = "select * from department_details order by departmentId asc";
+			NativeQuery query = session.createNativeQuery(sql);
+			List<StudentDepartment> list = query.getResultList();
+			transaction.commit();
+			session.close();
+			return list;
+		} catch (Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	public String saveAllDepartments(List<StudentDepartment> studentDepartments) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = commonFunctions.createSession();
+		Transaction transaction = session.beginTransaction();
+		try {
+			
+			String sql = "insert into department_details(departmentCode,departmentName) values(:departmentCode, :departmentName)";		
+			NativeQuery query= session.createNativeQuery(sql);
+			
+			for(StudentDepartment s:studentDepartments) {
+				query.setParameter("departmentCode", s.getDepartmentCode());
+				query.setParameter("departmentName", s.getDepartmentName());
+				query.executeUpdate();
+			}
+			transaction.commit();
+			session.close();
+			return studentDepartments.size()+"-Departments inserted successfully!";
+			
+		} catch (Exception e) {
+			transaction.rollback();
+			e.printStackTrace();
+			return "Departments insertion failed!";
+		}
 	}
 
 	

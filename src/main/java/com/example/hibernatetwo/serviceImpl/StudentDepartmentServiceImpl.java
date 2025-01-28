@@ -26,21 +26,13 @@ public class StudentDepartmentServiceImpl implements StudentDepartmentService {
 	}
 
 	@Override
-	public String updateDepartmentName(int studDepartmentId, String studDepartmentName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<StudentDepartment> getDepartmentList() {
-		// TODO Auto-generated method stub
-		return null;
+		return studDepartDao.getDepartmentList();
 	}
 
 	@Override
 	public String saveAllDepartments(List<StudentDepartment> studentDepartments) {
-		// TODO Auto-generated method stub
-		return null;
+		return studDepartDao.saveAllDepartments(studentDepartments);
 	}
 
 	
