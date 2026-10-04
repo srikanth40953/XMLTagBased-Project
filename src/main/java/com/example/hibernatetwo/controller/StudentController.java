@@ -66,6 +66,7 @@ public class StudentController {
 	public List<Student> getStudentList(){
 		List<Student> studentList = studentService.getStudentsList();
 		System.out.println("studentList="+studentList);
+		System.out.println("Deployment completed!!!");
 		return studentList;
 	}
 	
